@@ -11,18 +11,14 @@ import android.media.MediaPlayer.OnCompletionListener;
 import android.media.MediaPlayer.OnPreparedListener;
 
 import com.example.zidoopipdemo.view.VideoView;
-import com.mstar.android.tv.TvPictureManager;
-import com.mstar.android.tvapi.common.TvManager;
-import com.mstar.android.tvapi.common.exception.TvCommonException;
-import com.mstar.android.tvapi.common.vo.*;
-import com.mstar.android.tvapi.common.vo.TvOsType.EnumInputSource;
+import com.zidoo.test.hdmi.MyLog;
 
 /**
  * play video
  * 
  * @author jiangbo
  * 
- *         
+ *         www.zidoo.tv 2014-09-01
  */
 public class PlayVideoTool {
 	public VideoView	videoView	= null;
@@ -39,12 +35,12 @@ public class PlayVideoTool {
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
-				getVideo("/mnt");
+				getVideo("/storage");
 				if (playPath != null) {
-					System.out.println("bob  playPath = " + playPath);
+					MyLog.v("bob  playPath = " + playPath);
 					playVideoView(playPath);
 				} else {
-					System.out.println("bob  playPath = null");
+					MyLog.v("bob  playPath = null");
 
 				}
 			}
@@ -54,13 +50,15 @@ public class PlayVideoTool {
 
 	// get usb first video path
 	private void getVideo(String root) {
-		System.out.println("bob   root == " + root);
+		MyLog.v("bob   root == " + root);
 		File file = new File(root);
 		if (file.isDirectory()) {
 			File[] direFile = file.listFiles();
 			if (direFile != null) {
 				for (int i = 0; i < direFile.length; i++) {
-					if (direFile[i].isDirectory() && direFile[i].getAbsolutePath().contains("usb")) {
+					// if (direFile[i].isDirectory() &&
+					// direFile[i].getAbsolutePath().contains("storage")) {
+					if (direFile[i].isDirectory()) {
 						getVideo(direFile[i].getAbsolutePath());
 					} else {
 						if (isMovieFile(direFile[i].getName())) {
@@ -81,9 +79,7 @@ public class PlayVideoTool {
 	 */
 	private void playVideoView(final String path) {
 		try {
-			//set full dis
-			setFull();
-			
+			// set full dis
 			videoView.stopPlayback();
 			videoView.setOnErrorListener(mErrorListener);
 			videoView.setOnInfoListener(mInfoListener);
@@ -94,16 +90,6 @@ public class PlayVideoTool {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
-
-	/**
-	 * 
-	 * set video full
-	 * 
-	 * @author jiangbo 2015-9-10
-	 */
-	private void setFull() {
-		TvPictureManager.getInstance().setVideoArc(EnumVideoArcType.values()[0]);
 	}
 
 	OnPreparedListener					mPreparedListener	= new OnPreparedListener() {
@@ -125,7 +111,7 @@ public class PlayVideoTool {
 
 	OnCompletionListener				mCompletionListener	= new OnCompletionListener() {
 																public void onCompletion(MediaPlayer arg0) {
-																	 playVideoView(playPath);
+																	playVideoView(playPath);
 																}
 															};
 
@@ -153,18 +139,4 @@ public class PlayVideoTool {
 		return false;
 	}
 
-	/**
-	 * Switch sound
-	 * 
-	 * @param isHdmi
-	 * 
-	 */
-	public void setAudio(boolean isHdmi) {
-		try {
-			System.out.println("bob  isHdmi = " + isHdmi);
-			TvManager.getInstance().getAudioManager().setInputSource(isHdmi ? EnumInputSource.E_INPUT_SOURCE_HDMI : EnumInputSource.E_INPUT_SOURCE_STORAGE);
-		} catch (TvCommonException e) {
-			e.printStackTrace();
-		}
-	}
 }

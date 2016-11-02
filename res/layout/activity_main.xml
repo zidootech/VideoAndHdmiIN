@@ -25,27 +25,25 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:layout_width="640dip"
-        android:layout_height="420dip"
-        android:layout_marginLeft="640dip"
-        android:gravity="center" >
-
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:gravity="center"
-            android:text="No HDMI Signal"
-            android:textColor="#ffffff"
-            android:textSize="30sp" />
-    </RelativeLayout>
-
-    <com.example.zidoopipdemo.view.PipSurfaceView
-        android:id="@+id/home_ac_pipvideoview"
+        android:id="@+id/home_ac_hdmi"
         android:layout_width="640dip"
         android:layout_height="420dip"
         android:layout_marginLeft="640dip"
         android:focusable="false"
-        android:focusableInTouchMode="false" />
+        android:focusableInTouchMode="false"
+        android:gravity="center" >
+
+        <TextView
+            android:id="@+id/home_ac_video_hdmi_nosigle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="2dip"
+            android:text="No HDMI Signal"
+            android:textColor="#ffffff"
+            android:textSize="32sp"
+            android:visibility="gone" />
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="fill_parent"

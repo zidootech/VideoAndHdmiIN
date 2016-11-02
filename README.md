@@ -3,7 +3,7 @@
 
 This project is a demo for how to play video and play HDMI-IN at the same time.
 
-Please note that it can work only on Zidoo X9 device.                          
+Please note that this branch 'zidoo-x9s' can work only on Zidoo X9S device. 
 
 Build with Eclipse or Android Studio is ok. The platform dependent library is included.
 

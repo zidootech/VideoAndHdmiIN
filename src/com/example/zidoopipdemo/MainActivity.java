@@ -8,11 +8,14 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.zidoopipdemo.view.VideoView;
+import com.zidoo.test.hdmi.HdmiTool;
 
 public class MainActivity extends Activity implements OnClickListener {
 
@@ -21,7 +24,7 @@ public class MainActivity extends Activity implements OnClickListener {
 	private boolean			isVideoSount	= true;
 
 	private WebView			mWebView		= null;
-
+	private HdmiTool				mHdmiTool			= null;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -42,12 +45,18 @@ public class MainActivity extends Activity implements OnClickListener {
 				return true;
 			}
 		});
+		
+		ViewGroup hdmiGroud = (ViewGroup) findViewById(R.id.home_ac_hdmi);
+		mHdmiTool = new HdmiTool(MainActivity.this, hdmiGroud);
+		mHdmiTool.start();
 	}
 
 	@Override
 	protected void onDestroy() {
-		mPlayVideoTool.setAudio(false);
 		mPlayVideoTool.onDestroy();
+		if (mHdmiTool != null) {
+			mHdmiTool.onDestroy();
+		}
 		super.onDestroy();
 	}
 
@@ -56,7 +65,7 @@ public class MainActivity extends Activity implements OnClickListener {
 		switch (v.getId()) {
 		case R.id.sound:
 			isVideoSount = !isVideoSount;
-			mPlayVideoTool.setAudio(!isVideoSount);
+			mHdmiTool.setAudio(!isVideoSount);
 			((Button) v).setText(isVideoSount ? "Switch sound (Video)" : "Switch sound (HDMI)");
 			break;
 
