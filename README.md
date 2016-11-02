@@ -9,3 +9,5 @@ Build with Eclipse or Android Studio is ok. The platform dependent library is in
 
 Thanks again for your attention to this project.                                     
 
+## Prview
+![image](https://raw.githubusercontent.com/zidootech/VideoAndHdmiIN/master/video-hdmi_in-webview.jpg)
